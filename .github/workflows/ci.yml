@@ -40,7 +40,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      GOFLAGS: -mod=vendor
       GOARCH: amd64
     steps:
       - name: 检查代码
