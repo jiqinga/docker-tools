@@ -55,7 +55,7 @@ func getDockerNameByID(dockerID string) (string, error) {
 	defer func(cli *client.Client) {
 		err := cli.Close()
 		if err != nil {
-
+			fmt.Println(err)
 		}
 	}(cli)
 
