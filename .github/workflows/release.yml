@@ -8,11 +8,10 @@ on:
       - 'v*'
 
 jobs:
-  update_release_draft:
+  publishGitRelease:
     permissions:
       contents: write
       pull-requests: write
-  publishGitRelease:
     runs-on: ubuntu-latest
     steps:
       - name: 检查代码
