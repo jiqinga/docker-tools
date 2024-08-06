@@ -25,12 +25,13 @@ jobs:
         with:
           go-version: ${{ env.GO_VERSION }}
           check-latest: true
-
-      - name: 生成发行说明草稿
-        id: release_notes
-        uses: release-drafter/release-drafter@v5
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: 安装upx
+        run: sudo apt install upx -y
+#      - name: 生成发行说明草稿
+#        id: release_notes
+#        uses: release-drafter/release-drafter@v5
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Run goreleaser
         uses: goreleaser/goreleaser-action@v6
