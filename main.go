@@ -3,14 +3,15 @@ package main
 import (
 	"context"
 	"fmt"
-	"github.com/docker/docker/client"
-	"github.com/fatih/color"
-	"github.com/olekukonko/tablewriter"
-	"github.com/shirou/gopsutil/v4/process"
 	"os"
 	"regexp"
 	"strconv"
 	"strings"
+
+	"github.com/docker/docker/client"
+	"github.com/fatih/color"
+	"github.com/olekukonko/tablewriter"
+	"github.com/shirou/gopsutil/v4/process"
 )
 
 func getProcessName(pid int32) string {
@@ -20,13 +21,14 @@ func getProcessName(pid int32) string {
 		return ""
 	}
 
-	// 获取进程名称
+	//获取进程名称
 	name, err := p.Cmdline()
 	if err != nil {
 		color.Red("Error: 获取进程名称错误 %s", err)
 	}
 	return name
 }
+
 func createTable(data [][]string) {
 	table := tablewriter.NewWriter(os.Stdout)
 	table.SetHeader([]string{"PROCESS NAME", "PROCESS ID", "CONTAINER ID", "CONTAINER NAME"})
@@ -46,6 +48,7 @@ func createTable(data [][]string) {
 
 	table.Render()
 }
+
 func getDockerNameByID(dockerID string) (string, error) {
 	// 创建 Docker 客户端
 	cli, err := client.NewClientWithOpts(client.FromEnv, client.WithAPIVersionNegotiation())
@@ -68,32 +71,31 @@ func getDockerNameByID(dockerID string) (string, error) {
 	// 返回容器名称
 	return name, nil
 }
-func getDockerId(pid int32) (string, error) {
+
+func getDockerID(pid int32) (string, error) {
 	// 构建 cgroup 文件的路径
 	cgroupFilePath := fmt.Sprintf("/proc/%d/cgroup", pid)
 	// 读取 cgroup 文件
 	content, err := os.ReadFile(cgroupFilePath)
-	//匹配文件或目录不存在的错误
+	// 匹配文件或目录不存在的错误
 	if err != nil {
 		if os.IsNotExist(err) {
 			return "", fmt.Errorf(fmt.Sprintf("请检查PID为%d的进程是否存在", pid))
 			// 在这里处理文件或目录不存在的情况
-		} else {
-			// 处理其他类型的错误
-			color.Red("Error: %s", err)
 		}
+		// 处理其他类型的错误
+		color.Red("Error: %s", err)
 	}
-	//判断content中是否包含docker
+	//   判断content中是否包含docker
 	if strings.Contains(string(content), "docker-") {
-		//正则匹配cgroup中的docker id
+		// 正则匹配cgroup中的docker id
 		re := regexp.MustCompile(`[0-9a-fA-F]{64}`)
-		dockerId := re.FindString(string(content))
-		return dockerId, nil
-	} else {
-		return "", fmt.Errorf(fmt.Sprintf("PID为%d的进程不是docker进程", pid))
+		dockerID := re.FindString(string(content))
+		return dockerID, nil
 	}
-
+	return "", fmt.Errorf(fmt.Sprintf("PID为%d的进程不是docker进程", pid))
 }
+
 func stringToInt32(s string) (int32, error) {
 	// 将字符串转换为 int64
 	i64, err := strconv.ParseInt(s, 10, 64)
@@ -104,6 +106,7 @@ func stringToInt32(s string) (int32, error) {
 	i32 := int32(i64)
 	return i32, nil
 }
+
 func run(pid string) {
 	var data [][]string
 	for _, v := range strings.Split(pid, ",") {
@@ -112,21 +115,21 @@ func run(pid string) {
 			color.Red("Error: %s", err)
 			return
 		}
-		dockerId, err := getDockerId(pid)
+		dockerID, err := getDockerID(pid)
 		if err != nil {
 			color.Red("Error: %s", err)
-			continue //return
+			continue // return
 		}
-		name, err := getDockerNameByID(dockerId)
+		name, err := getDockerNameByID(dockerID)
 		if err != nil {
 			color.Red("Error: %s", err)
 			return
 		}
-		data = append(data, []string{getProcessName(pid), strconv.FormatInt(int64(pid), 10), dockerId[:10], name})
-
+		data = append(data, []string{getProcessName(pid), strconv.FormatInt(int64(pid), 10), dockerID[:10], name})
 	}
 	createTable(data)
 }
+
 func main() {
 	var pid string
 	fmt.Println("说明：根据你输入的进程 ID (PID)，找到对应的 Docker 容器")
@@ -137,5 +140,4 @@ func main() {
 		return
 	}
 	run(pid)
-
 }
