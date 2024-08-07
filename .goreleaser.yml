@@ -39,12 +39,12 @@ archives:
   - builds:
       - binary
     name_template: ".dtools_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
-    replacements:
-      darwin: Darwin
-      linux: Linux
-      windows: Windows
-      386: x86
-      amd64: x86_64
+#    replacements:
+#      darwin: Darwin
+#      linux: Linux
+#      windows: Windows
+#      386: x86
+#      amd64: x86_64
     format_overrides:
       - goos: windows
         format: zip
