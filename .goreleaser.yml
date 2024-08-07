@@ -35,11 +35,6 @@ builds:
       - 386
     ldflags:
       - -s -w -X main.version={{.Version}} -X main.commit={{.Commit}} -X main.date={{.Date}} -X main.buildSource=snap
-upx:
-  enabled: true
-#  compress: best
-  compress: 9
-  lzma: true
 archives:
   - builds:
       - binary
@@ -59,6 +54,11 @@ archives:
       - CHANGELOG.md
       - docs/*
 
+upx:
+  - enabled: true
+#  compress: best
+    compress: 9
+    lzma: true
 checksum:
   name_template: "checksums.txt"
 
