@@ -39,13 +39,16 @@ archives:
   - builds:
       - binary
     name_template: >
-      .dtools_{{ .Version }}_{{- title .Os }}_
+      dtools_{{ .Version }}_{{- title .Os }}_
       {{- if eq .Arch "amd64" }}x86_64
       {{- else if eq .Arch "386" }}i386
       {{- else }}{{ .Arch }}{{ end -}}
     format_overrides:
       - goos: windows
         format: zip
+    builds_info:
+      group: root
+      owner: root
     files:
       - LICENSE
       - README.md
@@ -67,22 +70,22 @@ changelog:
   use: github
   groups:
     - title: Dependency updates
-      regexp: '^.*?(feat|fix)\(deps\)!?:.+$'
+      regexp: '^.*?(.+)\(deps\)!?:.+$'
       order: 300
-    - title: 'New Features'
-      regexp: '^.*?feat(\([[:word:]]+\))??!?:.+$'
+    - title: "New Features"
+      regexp: '^.*?feat(\(.+\))??!?:.+$'
       order: 100
-    - title: 'Security updates'
-      regexp: '^.*?sec(\([[:word:]]+\))??!?:.+$'
+    - title: "Security updates"
+      regexp: '^.*?sec(\(.+\))??!?:.+$'
       order: 150
-    - title: 'Bug fixes'
-      regexp: '^.*?fix(\([[:word:]]+\))??!?:.+$'
+    - title: "Bug fixes"
+      regexp: '^.*?(fix|refactor)(\(.+\))??!?:.+$'
       order: 200
-    - title: 'Documentation updates'
-      regexp: '^.*?doc(\([[:word:]]+\))??!?:.+$'
+    - title: "Documentation updates"
+      regexp: ^.*?docs?(\(.+\))??!?:.+$
       order: 400
-    - title: 'Build process updates'
-      regexp: '^.*?build(\([[:word:]]+\))??!?:.+$'
+    - title: "Build process updates"
+      regexp: ^.*?(build|ci)(\(.+\))??!?:.+$
       order: 400
     - title: Other work
       order: 9999
