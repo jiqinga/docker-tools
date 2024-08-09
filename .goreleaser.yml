@@ -73,25 +73,25 @@ changelog:
       regexp: '^.*?(.+)\(deps\)!?:.+$'
       order: 300
     - title: "New Features"
-      regexp: '^.*?feat(\(.+\))??!?:.+$'
+      regexp: '^.*?(feat|新功能|add)(\(.+\))??!?:.+$'
       order: 100
     - title: "Security updates"
       regexp: '^.*?sec(\(.+\))??!?:.+$'
       order: 150
     - title: "Bug fixes"
-      regexp: '^.*?(fix|refactor)(\(.+\))??!?:.+$'
+      regexp: '^.*?(fix|refactor|bug)(\(.+\))??!?:.+$'
       order: 200
     - title: "Documentation updates"
-      regexp: ^.*?docs?(\(.+\))??!?:.+$
+      regexp: '^.*?docs?(\(.+\))??!?:.+$'
       order: 400
     - title: "Build process updates"
-      regexp: ^.*?(build|ci)(\(.+\))??!?:.+$
+      regexp: '^.*?(build|ci)(\(.+\))??!?:.+$'
       order: 400
     - title: Other work
       order: 9999
   filters:
     exclude:
-      - "^docs:"
+#      - "^docs:"
       - "^test:"
       - "^bump"
 
