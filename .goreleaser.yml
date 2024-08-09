@@ -26,8 +26,7 @@ builds:
     goarm:
       - 7
     ldflags:
-#      - -s -w -X main.version={{.Version}} -X main.commit={{.Commit}} -X main.date={{.Date}} -X main.buildSource=binaryRelease
-      - -X main.version={{.Version}} -X main.commit={{.Commit}} -X main.date={{.Date}} -X main.buildSource=binaryRelease
+      - -s -w -X main.version={{.Version}} -X main.commit={{.Commit}} -X main.date={{.Date}} -X main.buildSource=binaryRelease
 #  - id: snap
 #    goos:
 #      - linux
@@ -60,10 +59,9 @@ archives:
 
 upx:
   - enabled: true
-#  compress: best
-    compress: 9
-#    lzma: true
-    lzma: false
+  compress: best
+#    compress: 9
+    lzma: true
 checksum:
   name_template: "checksums.txt"
 
