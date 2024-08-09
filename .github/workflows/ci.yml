@@ -44,9 +44,9 @@ jobs:
     env:
       GOARCH: amd64
     steps:
-      - name: 检查代码
+      - name: build检查代码
         uses: actions/checkout@v4
-      - name: 设置go版本
+      - name: build设置go版本
         uses: actions/setup-go@v5
         with:
           go-version: ${{ env.GO_VERSION }}
