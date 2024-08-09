@@ -21,7 +21,7 @@ func getProcessName(pid int32) string {
 		return ""
 	}
 
-	//获取进程名称
+	// 获取进程名称
 	name, err := p.Cmdline()
 	if err != nil {
 		color.Red("Error: 获取进程名称错误 %s", err)
