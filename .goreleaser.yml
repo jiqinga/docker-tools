@@ -58,11 +58,12 @@ archives:
       - README.md
       - docs/*
 
-#upx:
-#  - enabled: true
-##  compress: best
-#    compress: 9
+upx:
+  - enabled: true
+#  compress: best
+    compress: 9
 #    lzma: true
+    lzma: false
 checksum:
   name_template: "checksums.txt"
 
