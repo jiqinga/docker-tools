@@ -21,9 +21,8 @@ builds:
       - arm64
       - 386
     hooks:
-#      pre:
-#        - first-script.sh
-#        - second-script.sh
+      pre:
+        - chmod +x scripts/upx.sh
       post:
         - scripts/upx.sh "{{ .Path }}"
 #    env:
