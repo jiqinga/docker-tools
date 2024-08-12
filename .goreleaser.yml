@@ -60,8 +60,8 @@ archives:
 upx:
   - enabled: true
     compress: best
-    compress: 9
-#    lzma: true
+#    compress: 9
+    lzma: true
 checksum:
   name_template: "checksums.txt"
 
