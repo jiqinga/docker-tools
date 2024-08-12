@@ -25,7 +25,7 @@ builds:
 #        - first-script.sh
 #        - second-script.sh
       post:
-        - if [[ ! "{{ .Path }}" =~ windows_arm_7 ]]; then  upx -9  --lzma "{{ .Path }}"   ls; fi
+        - scripts/upx.sh "{{ .Path }}"
 #    env:
 #      - CGO_ENABLED=0
 #      - GO111MODULE=auto
