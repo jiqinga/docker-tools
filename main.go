@@ -8,6 +8,8 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/pkg/errors"
+
 	"github.com/docker/docker/client"
 	"github.com/fatih/color"
 	"github.com/olekukonko/tablewriter"
@@ -136,6 +138,12 @@ func main() {
 	fmt.Print("请输入PID，多个PID用英文逗号分隔：")
 	_, err := fmt.Scanf("%s", &pid)
 	if err != nil {
+		if strings.Contains(err.Error(), "unexpected newline") {
+
+			err := errors.New("输入错误")
+			color.Red("Error: %s", err)
+			return
+		}
 		fmt.Println("Error:", err)
 		return
 	}
