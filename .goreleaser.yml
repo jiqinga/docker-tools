@@ -20,9 +20,15 @@ builds:
       - arm
       - arm64
       - 386
-    env:
-      - CGO_ENABLED=0
-      - GO111MODULE=auto
+    hooks:
+#      pre:
+#        - first-script.sh
+#        - second-script.sh
+      post:
+        - upx -9  --lzma "{{ .Path }}"
+#    env:
+#      - CGO_ENABLED=0
+#      - GO111MODULE=auto
     goarm:
       - 7
     ldflags:
@@ -57,11 +63,11 @@ archives:
       - README.md
       - docs/*
 
-upx:
-  - enabled: true
-    compress: best
-#    compress: 9
-    lzma: false
+#upx:
+#  - enabled: true
+#    compress: best
+##    compress: 9
+#    lzma: false
 checksum:
   name_template: "checksums.txt"
 
