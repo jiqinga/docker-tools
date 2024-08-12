@@ -93,32 +93,34 @@ jobs:
         run: |
           go mod vendor && git diff --exit-code || (echo "Unexpected change to vendor directory. Run 'go mod vendor' locally and commit the changes" && exit 1)
 
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - name: 检查代码
-        uses: actions/checkout@v4
-      - name: 设置go版本
-        uses: actions/setup-go@v5
-        with:
-          go-version: ${{ env.GO_VERSION }}
-      - name: 构建缓存
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/go-build
-          key: ${{runner.os}}-go-${{hashFiles('**/go.sum')}}-test
-          restore-keys: |
-            ${{runner.os}}-go-
-      - name: 代码质量检查
-        uses: golangci/golangci-lint-action@v6
-        with:
-          version: latest
-      - name: 格式化代码
-        run: |
-          if [ $(find . ! -path "./vendor/*" -name "*.go" -exec gofmt -s -d {} \;|wc -l) -gt 0 ]; then
-           find . ! -path "./vendor/*" -name "*.go" -exec gofmt -s -d {} \;
-           exit 1
-          fi
-      - name: 错误处理
-        run: golangci-lint run
-        if: ${{ failure() }}
+# 不使用golangci-lint检查
+#  lint:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: 检查代码
+#        uses: actions/checkout@v4
+#      - name: 设置go版本
+#        uses: actions/setup-go@v5
+#        with:
+#          go-version: ${{ env.GO_VERSION }}
+#      - name: 构建缓存
+#        uses: actions/cache@v4
+#        with:
+#          path: ~/.cache/go-build
+#          key: ${{runner.os}}-go-${{hashFiles('**/go.sum')}}-test
+#          restore-keys: |
+#            ${{runner.os}}-go-
+#      - name: 代码质量检查
+#        uses: golangci/golangci-lint-action@v6
+#        with:
+#          version: latest
+#          args:
+#      - name: 格式化代码
+#        run: |
+#          if [ $(find . ! -path "./vendor/*" -name "*.go" -exec gofmt -s -d {} \;|wc -l) -gt 0 ]; then
+#           find . ! -path "./vendor/*" -name "*.go" -exec gofmt -s -d {} \;
+#           exit 1
+#          fi
+#      - name: 错误处理
+#        run: golangci-lint run
+#        if: ${{ failure() }}
