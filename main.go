@@ -130,6 +130,10 @@ func run(pid string) {
 		}
 		data = append(data, []string{getProcessName(pid), strconv.FormatInt(int64(pid), 10), dockerID[:10], name})
 	}
+	// 如果为空则不渲染输出表格
+	if len(data) == 0 {
+		return
+	}
 	createTable(data)
 }
 
