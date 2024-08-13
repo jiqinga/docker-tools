@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"regexp"
+	"runtime"
 	"strconv"
 	"strings"
 
@@ -134,6 +135,15 @@ func run(pid string) {
 
 func main() {
 	var pid string
+	// 获取操作系统类型
+	osType := runtime.GOOS
+
+	// 判断系统是否为Linux
+	if osType != "linux" {
+		err := errors.New("仅支持Linux系统")
+		fmt.Println(err)
+		return
+	}
 	fmt.Println("说明：根据你输入的进程 ID (PID)，找到对应的 Docker 容器")
 	fmt.Print("请输入PID，多个PID用英文逗号分隔：")
 	_, err := fmt.Scanf("%s", &pid)

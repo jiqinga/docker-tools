@@ -11,9 +11,9 @@ env:
 builds:
   - id: binary
     goos:
-      # - freebsd
-      - windows
-      - darwin
+#      - freebsd
+#      - windows
+#      - darwin
       - linux
     goarch:
       - amd64

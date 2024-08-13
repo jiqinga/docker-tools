@@ -18,7 +18,7 @@ jobs:
       matrix:
         os:
           - ubuntu-latest
-          - windows-latest
+#          - windows-latest
 
     name: ci - ${{matrix.os}}
     runs-on: ${{matrix.os}}
@@ -60,12 +60,12 @@ jobs:
       - name: 构建Linux二进制文件
         run: |
           GOOS=linux go build
-      - name: 构建windows二进制文件
-        run: |
-          GOOS=windows go build
-      - name: 构建macos二进制文件
-        run: |
-          GOOS=darwin go build -ldflags="-s -w"
+#      - name: 构建windows二进制文件
+#        run: |
+#          GOOS=windows go build
+#      - name: 构建macos二进制文件
+#        run: |
+#          GOOS=darwin go build -ldflags="-s -w"
 
   check-codebase:
     runs-on: ubuntu-latest
